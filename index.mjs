@@ -56,6 +56,28 @@ app.get("/authors", async function(req, res){
  res.render("authorList", {"authors":rows});
 });
 
+app.post("/author/edit", async function(req, res){
+  let sql = `UPDATE q_authors
+            SET firstName = ?,
+                lastName = ?,
+                dob = ?,
+                sex = ?,
+                dod = ?,
+                profession = ?,
+                portrait = ?,
+                country = ?,
+                biography = ?
+            WHERE authorId =  ?`;
+
+
+  let params = [req.body.fName,  
+              req.body.lName, req.body.dob, 
+              req.body.sex, req.body.deathDate, req.body.profession, req.body.imageUrl, req.body.country, req.body.bio, req.body.authorId];         
+  const [rows] = await conn.query(sql,params);
+  res.redirect("/authors");
+});
+
+
 app.get("/author/edit", async function(req, res){
 
 
@@ -63,11 +85,31 @@ app.get("/author/edit", async function(req, res){
 
 
  let sql = `SELECT *, 
-        DATE_FORMAT(dob, '%Y-%m-%d') dobISO
+        DATE_FORMAT(dob, '%Y-%m-%d') dobISO,
+        DATE_FORMAT(dod, '%Y-%m-%d') AS dodISO
         FROM q_authors
         WHERE authorId =  ${authorId}`;
  const [rows] = await conn.query(sql);
  res.render("editAuthor", {"authorInfo":rows});
+});
+
+app.get("/author/delete", async function(req, res){
+    let authorId = req.query.authorId;
+
+    let sql = `DELETE
+               FROM q_authors
+               Where authorId = ?`;
+
+    const [rows] = await conn.query(sql, [authorId]);
+
+    res.redirect("/authors");
+})
+
+app.get("/quotes", async function(req, res){
+ let sql = `SELECT *
+            FROM q_quotes`;
+ const [rows] = await conn.query(sql);
+ res.render("quoteList", {"quotes":rows});
 });
 
 app.get("/dbTest", async(req, res) => {
