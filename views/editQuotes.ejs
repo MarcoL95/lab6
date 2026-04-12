@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CRUD Operations</title>
+</head>
+<body>
+  
+  <h1>Updating Quote Data</h1>
+
+<form method="POST" action="/quote/edit">
+
+  <input type="hidden" name="quoteId" value="<%= quoteInfo[0].quoteId %>">
+
+  <input type="hidden" name="authorId" value="<%= quoteInfo[0].authorId %>">
+
+  Quote:
+  <input type="text" name="quote" value="<%= quoteInfo[0].quote %>">
+  <br>
+
+  Category:
+  <select name="category">
+    <option value="Inspirational" <%= quoteInfo[0].category === 'Inspirational' ? 'selected' : '' %>>Inspirational</option>
+    <option value="Life" <%= quoteInfo[0].category === 'Life' ? 'selected' : '' %>>Life</option>
+    <option value="Moral" <%= quoteInfo[0].category === 'Moral' ? 'selected' : '' %>>Moral</option>
+    <option value="Wisdom" <%= quoteInfo[0].category === 'Wisdom' ? 'selected' : '' %>>Wisdom</option>
+    <option value="Motivational" <%= quoteInfo[0].category === 'Motivational' ? 'selected' : '' %>>Motivational</option>
+  </select>
+  <br>
+
+  Likes:
+  <input type="number" name="likes" value="<%= quoteInfo[0].likes %>">
+  <br>
+
+  <button>Update Quote</button>
+</form>  
+</body>
+</html>

@@ -93,7 +93,7 @@ app.get("/author/edit", async function(req, res){
  res.render("editAuthor", {"authorInfo":rows});
 });
 
-app.get("/author/delete", async function(req, res){
+app.post("/author/delete", async function(req, res){
     let authorId = req.query.authorId;
 
     let sql = `DELETE
@@ -111,6 +111,49 @@ app.get("/quotes", async function(req, res){
  const [rows] = await conn.query(sql);
  res.render("quoteList", {"quotes":rows});
 });
+
+app.post("/quote/edit", async function(req, res) {
+  let sql = `UPDATE q_quotes
+             SET quote = ?,
+                 authorId = ?,
+                 category = ?,
+                 likes = ?
+             WHERE quoteId = ?`;
+
+  let params = [
+    req.body.quote,
+    req.body.authorId,
+    req.body.category,
+    req.body.likes,
+    req.body.quoteId
+  ];
+
+  await conn.query(sql, params);
+  res.redirect("/quotes");
+});
+
+app.get("/quote/edit", async function(req, res) {
+  let quoteId = req.query.quoteId;
+
+  let sql = `SELECT *
+             FROM q_quotes
+             WHERE quoteId = ?`;
+
+  const [rows] = await conn.query(sql, [quoteId]);
+  res.render("editQuotes", { quoteInfo: rows });
+});
+
+app.post("/quote/delete", async function(req, res){
+    let quoteId = req.query.quoteId;
+
+    let sql = `DELETE
+               FROM q_quotes
+               Where quoteId = ?`;
+
+    const [rows] = await conn.query(sql, [quoteId]);
+
+    res.redirect("/quotes");
+})
 
 app.get("/dbTest", async(req, res) => {
    try {
