@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD Operations</title>
-</head>
-<body>
+<%- include("partials/header.ejs") %>
+
+<body class="bg-light">
     <h1>Adding a new Author</h1>
 
 
@@ -36,6 +31,6 @@
     <% if (typeof message != "undefined"){ %>
   		 <h3><%=message%></h3>
 <% } %>
-
+<%- include("partials/footer.ejs") %>
 </body>
 </html>
