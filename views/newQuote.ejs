@@ -1,0 +1,62 @@
+<%- include("partials/header.ejs") %>
+
+<body class="bg-light">
+
+<div class="container py-5">
+
+  <h2 class="text-center mb-4">Add New Quote</h2>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+
+      <div class="card shadow-sm p-4">
+
+        <form method="POST" action="/quote/new">
+
+          <div class="mb-3">
+            <label class="form-label">Quote</label>
+            <input type="text" name="quote" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Category</label>
+            <input type="text" name="category" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Likes</label>
+            <input type="number" name="likes" value="0" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Author</label>
+            <select name="authorId" class="form-select" required>
+              <option value="">Select Author</option>
+              <% authors.forEach(author => { %>
+                <option value="<%= author.authorId %>">
+                  <%= author.firstName %> <%= author.lastName %>
+                </option>
+              <% }) %>
+            </select>
+          </div>
+
+          <button class="btn btn-primary w-100">Add Quote</button>
+
+        </form>
+
+        <% if (typeof message != "undefined"){ %>
+          <div class="alert alert-success mt-3 text-center">
+            <%= message %>
+          </div>
+        <% } %>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<%- include("partials/footer.ejs") %>
+</body>
+</html>

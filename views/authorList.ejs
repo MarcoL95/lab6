@@ -1,25 +1,54 @@
 <%- include("partials/header.ejs") %>
 
 <body class="bg-light">
-  <div class="container text-center">
-    <h1> Update/Delete Authors </h1>
 
+<div class="container py-5">
 
- <% for (i=0; i < authors.length; i++) { %>
+  <h2 class="text-center mb-4">Update / Delete Authors</h2>
 
+  <div class="row justify-content-center">
+    <div class="col-md-8">
 
-   <a href="/author/edit?authorId=<%=authors[i].authorId%>">UPDATE</a>
+      <div class="card shadow-sm p-4">
 
+        <table class="table table-hover text-center align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Name</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
 
-   <a href="/author/delete?authorId=<%=authors[i].authorId%>">DELETE</a>
+            <% authors.forEach(author => { %>
+              <tr>
+                <td>
+                  <%= author.firstName %> <%= author.lastName %>
+                </td>
+                <td>
+                  <a href="/author/edit?authorId=<%= author.authorId %>" 
+                     class="btn btn-sm btn-primary me-2">
+                     Update
+                  </a>
 
+                  <a href="/author/delete?authorId=<%= author.authorId %>" 
+                     class="btn btn-sm btn-outline-danger">
+                     Delete
+                  </a>
+                </td>
+              </tr>
+            <% }) %>
 
-   <%=authors[i].firstName%>
-   <%=authors[i].lastName%> <br>
+          </tbody>
+        </table>
 
+      </div>
 
- <% } %>
-<%- include("partials/footer.ejs") %>
+    </div>
   </div>
+
+</div>
+
+<%- include("partials/footer.ejs") %>
 </body>
 </html>

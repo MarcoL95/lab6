@@ -41,7 +41,7 @@ app.post("/author/new", async function(req, res){
 
   let sql = `INSERT INTO q_authors
              (firstName, lastName, dob, dod, sex, profession, country, portrait, biography)
-              VALUES (?, ?, ?, ?, ?, ?)`;
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
   let params = [fName, lName, birthDate, deathDate, sex, profession, country, bio];
   const [rows] = await conn.query(sql, params);
   res.render("newAuthor", 
@@ -154,6 +154,31 @@ app.post("/quote/delete", async function(req, res){
 
     res.redirect("/quotes");
 })
+
+app.get("/quote/new", async (req, res) => {
+  let sql = `SELECT authorId, firstName, lastName FROM q_authors ORDER BY lastName`;
+  const [authors] = await conn.query(sql);
+
+  res.render("newQuote", { authors });
+});
+
+app.post("/quote/new", async (req, res) => {
+  let quote = req.body.quote;
+  let category = req.body.category;
+  let likes = req.body.likes || 0;
+  let authorId = req.body.authorId;
+
+  let sql = `INSERT INTO q_quotes
+             (quote, authorId, category, likes)
+             VALUES (?, ?, ?, ?)`;
+
+  let params = [quote, authorId, category, likes];
+
+  await conn.query(sql, params);
+
+  res.render("newQuote", { message: "Quote added!" });
+});
+
 
 app.get("/dbTest", async(req, res) => {
    try {

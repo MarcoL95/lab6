@@ -2,37 +2,50 @@
 
 <body class="bg-light">
 
-<div class="container-fluid text-center">
- <h1 class="display-4 text-center fw-bold text-dark mb-4"> Famous Quotes - Admin Section </h1>
+<div class="container py-5">
 
- <hr>
+  <h1 class="display-5 fw-bold text-center mb-4">
+    Famous Quotes - Admin Section
+  </h1>
 
- <div class="container p-3">
- <div class="row g-0 justify-content-center border rounded p-3 bg-info.bg-gradient">
-  <div class="col-4">
-   <form action="/author/new">
-     <button class="btn btn-primary">Add Authors</button>
-   </form><br>
+  <hr class="mb-5">
 
+  <div class="row justify-content-center">
+    <div class="col-md-6">
 
-   <form action="/quote/new">
-     <button class="btn btn-primary">Add Quotes</button>
-   </form><br>
+      <div class="card shadow-sm p-4">
+
+        <div class="row text-center">
+
+          <div class="col-6">
+            <form action="/author/new" class="mb-3">
+              <button class="btn btn-primary w-100">Add Author</button>
+            </form>
+
+            <form action="/quote/new">
+              <button class="btn btn-primary w-100">Add Quote</button>
+            </form>
+          </div>
+
+          <div class="col-6">
+            <form action="/authors" class="mb-3">
+              <button class="btn btn-primary w-100">List Authors</button>
+            </form>
+
+            <form action="/quotes">
+              <button class="btn btn-primary w-100">List Quotes</button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
   </div>
 
-  <div class="col-4">
-   <form action="/authors">
-     <button class="btn btn-primary">List Authors</button>
-   </form><br>
- 
-   <form action="/quotes">
-     <button class="btn btn-primary">List Quotes</button>
-   </form>
-  </div>
-   </div>
- </div>
+</div>
 
 <%- include("partials/footer.ejs") %>
-</div>
- </body>
+</body>
 </html>

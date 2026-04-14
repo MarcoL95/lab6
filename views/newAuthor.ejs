@@ -1,36 +1,87 @@
 <%- include("partials/header.ejs") %>
 
 <body class="bg-light">
-    <h1>Adding a new Author</h1>
 
+<div class="container py-5">
 
-    <form method="POST" action="/author/new">
-      First Name:
-      <input type="text" name="fName"><br>
-      Last Name:
-      <input type="text" name="lName"><br>
-      Date of Birth:
-      <input type="date" name="birthDate"><br>
-      Date of Death:
-      <input type="date" name="deathDate"><br>
-      Sex:
-      <input type="radio" name="sex" value="M"> Male<br>
-      <input type="radio" name="sex" value="F"> Female<br>
-      Profession:
-      <input type="text" name="profession"><br>
-      Image URL:
-      <input type="url" name="imageUrl"><br>
-      Country:
-      <input type="text" name="country"><br>
-      Biography:
-      <input type="text" name="bio">
-      <br>  
-      <button>Add Author</button>
-    </form>
+  <h2 class="text-center mb-4">Add New Author</h2>
 
-    <% if (typeof message != "undefined"){ %>
-  		 <h3><%=message%></h3>
-<% } %>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+
+      <div class="card shadow-sm p-4">
+
+        <form method="POST" action="/author/new">
+
+          <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <input type="text" name="fName" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <input type="text" name="lName" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Date of Birth</label>
+            <input type="date" name="birthDate" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Date of Death</label>
+            <input type="date" name="deathDate" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Sex</label><br>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="sex" value="M">
+              <label class="form-check-label">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="sex" value="F">
+              <label class="form-check-label">Female</label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Profession</label>
+            <input type="text" name="profession" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Image URL</label>
+            <input type="url" name="imageUrl" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Country</label>
+            <input type="text" name="country" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Biography</label>
+            <textarea name="bio" class="form-control" rows="3"></textarea>
+          </div>
+
+          <button class="btn btn-primary w-100">Add Author</button>
+
+        </form>
+
+        <% if (typeof message != "undefined"){ %>
+          <div class="alert alert-success mt-3 text-center">
+            <%= message %>
+          </div>
+        <% } %>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
 <%- include("partials/footer.ejs") %>
 </body>
 </html>
