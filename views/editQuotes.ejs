@@ -1,34 +1,78 @@
 <%- include("partials/header.ejs") %>
 
 <body class="bg-light">
-  <h1>Updating Quote Data</h1>
 
-<form method="POST" action="/quote/edit">
+<div class="container py-5">
 
-  <input type="hidden" name="quoteId" value="<%= quoteInfo[0].quoteId %>">
+  <h2 class="text-center mb-4">Update Quote</h2>
 
-  <input type="hidden" name="authorId" value="<%= quoteInfo[0].authorId %>">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
 
-  Quote:
-  <input type="text" name="quote" value="<%= quoteInfo[0].quote %>">
-  <br>
+      <div class="card shadow-sm p-4">
 
-  Category:
-  <select name="category">
-    <option value="Inspirational" <%= quoteInfo[0].category === 'Inspirational' ? 'selected' : '' %>>Inspirational</option>
-    <option value="Life" <%= quoteInfo[0].category === 'Life' ? 'selected' : '' %>>Life</option>
-    <option value="Moral" <%= quoteInfo[0].category === 'Moral' ? 'selected' : '' %>>Moral</option>
-    <option value="Wisdom" <%= quoteInfo[0].category === 'Wisdom' ? 'selected' : '' %>>Wisdom</option>
-    <option value="Motivational" <%= quoteInfo[0].category === 'Motivational' ? 'selected' : '' %>>Motivational</option>
-  </select>
-  <br>
+        <form method="POST" action="/quote/edit">
 
-  Likes:
-  <input type="number" name="likes" value="<%= quoteInfo[0].likes %>">
-  <br>
+          <input type="hidden" name="quoteId" value="<%= quoteInfo[0].quoteId %>">
 
-  <button>Update Quote</button>
-</form>  
+          <div class="mb-3">
+            <label class="form-label">Quote</label>
+            <input 
+              type="text" 
+              name="quote" 
+              class="form-control"
+              value="<%= quoteInfo[0].quote %>" 
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Category</label>
+            <select name="category" class="form-select" required>
+              <option value="">Select Category</option>
+              <% categories.forEach(c => { %>
+                <option value="<%= c.category %>" 
+                  <%= quoteInfo[0].category === c.category ? 'selected' : '' %>>
+                  <%= c.category %>
+                </option>
+              <% }) %>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Likes</label>
+            <input 
+              type="number" 
+              name="likes" 
+              class="form-control"
+              value="<%= quoteInfo[0].likes %>"
+            >
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Author</label>
+            <select name="authorId" class="form-select" required>
+              <option value="">Select Author</option>
+              <% authors.forEach(author => { %>
+                <option value="<%= author.authorId %>"
+                  <%= quoteInfo[0].authorId == author.authorId ? 'selected' : '' %>>
+                  <%= author.firstName %> <%= author.lastName %>
+                </option>
+              <% }) %>
+            </select>
+          </div>
+
+          <button class="btn btn-primary w-100">Update Quote</button>
+
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
 <%- include("partials/footer.ejs") %>
 </body>
 </html>

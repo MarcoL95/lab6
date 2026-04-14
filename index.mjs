@@ -135,12 +135,35 @@ app.post("/quote/edit", async function(req, res) {
 app.get("/quote/edit", async function(req, res) {
   let quoteId = req.query.quoteId;
 
-  let sql = `SELECT *
-             FROM q_quotes
-             WHERE quoteId = ?`;
+  let quoteSql = `
+    SELECT *
+    FROM q_quotes
+    WHERE quoteId = ?
+  `;
 
-  const [rows] = await conn.query(sql, [quoteId]);
-  res.render("editQuotes", { quoteInfo: rows });
+  let authorSql = `
+    SELECT authorId, firstName, lastName
+    FROM q_authors
+    ORDER BY lastName
+  `;
+
+  let categorySql = `
+    SELECT DISTINCT category
+    FROM q_quotes
+    WHERE category IS NOT NULL
+      AND category <> ''
+    ORDER BY category
+  `;
+
+  const [quoteInfo] = await conn.query(quoteSql, [quoteId]);
+  const [authors] = await conn.query(authorSql);
+  const [categories] = await conn.query(categorySql);
+
+  res.render("editQuotes", {
+    quoteInfo,
+    authors,
+    categories
+  });
 });
 
 app.post("/quote/delete", async function(req, res){
@@ -156,10 +179,24 @@ app.post("/quote/delete", async function(req, res){
 })
 
 app.get("/quote/new", async (req, res) => {
-  let sql = `SELECT authorId, firstName, lastName FROM q_authors ORDER BY lastName`;
-  const [authors] = await conn.query(sql);
+  let authorSql = `
+    SELECT authorId, firstName, lastName
+    FROM q_authors
+    ORDER BY lastName
+  `;
 
-  res.render("newQuote", { authors });
+  let categorySql = `
+    SELECT DISTINCT category
+    FROM q_quotes
+    WHERE category IS NOT NULL
+      AND category <> ''
+    ORDER BY category
+  `;
+
+  const [authors] = await conn.query(authorSql);
+  const [categories] = await conn.query(categorySql);
+
+  res.render("newQuote", { authors, categories });
 });
 
 app.post("/quote/new", async (req, res) => {
